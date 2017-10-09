@@ -8,56 +8,48 @@
 #include<fcntl.h>
 #include<malloc.h>
 using namespace std;
-int readNum(string & s,int * temp)
+int readNum(char * s,int * temp)
 {
 	int i=0,j=0;
 	while(s[i]!='\0')
 	{
-		//cout<<s[i]<<' ';
 		if(s[i]>='0'&&s[i]<='9')
 		{
 			temp[j]=temp[j]*10+(s[i]-'0');
-			//cout<<temp[j]<<' ';
 		}else if(s[i]==' ')
 		{
-			//cout<<temp[j]<<' ';
-			j++;
-			temp[j]=0;
+				j++;
+				temp[j]=0;
 		}
 		i++;
 	}
-	//cout<<endl;
 	return j;
 }
-void showBin(string binfile)
-{
-	ifstream infile;
-	infile.open(binfile.data());
-	string s;
-	while(getline(infile,s))
+char * construct_string(string  s){
+	int i=2,j=0;
+	char * t=(char *)malloc(sizeof(int)*(s.length()-2));
+	while(s[i]!='\0')
 	{
-		cout<<s<<endl;
+		t[j++]=s[i];
+		i++;
 	}
+	t[j]='\0';
+	return t;
 }
 void readTxt(string my_infile,string my_outfile)
 {
 	ifstream infile;
 	infile.open(my_infile.data());
 	int fd=open(my_outfile.c_str(),O_WRONLY,0);
-	//ofstream outfile("outtest.bin",ios::binary);
 	string s;
 	while(getline(infile,s))
 	{
-		//readNum(s);
-		//cout<<s<<endl;
-		int * temp=(int *)malloc(2*sizeof(int));
-		int len=readNum(s,temp);
-		//cout<<"len:"<<len<<endl;
-		//int temp[3]={1,2,3};
-		write(fd,temp,sizeof(int)*(len+1));
-		//s="Hello";
-		//outfile.write(s.c_str(),sizeof(s));
-		
+		int * temp=(int *)malloc(3*sizeof(int));
+		char * t=construct_string(s);
+		cout<<"t:";
+		cout<<t<<endl;
+		int len=readNum(t,temp);
+		write(fd,temp,sizeof(int)*(len+1));	
 	}
 	infile.close();
 	close(fd);
