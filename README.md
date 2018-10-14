@@ -1,12 +1,2 @@
-# dataToBIn:main
-Convert a text file or MXT format to a binary file 
-I have a graph file in MTX or txt,and this program can convert it to a binary file.
-step1 you need compile it,like this:
-g++ -o main main.cpp
-
-
-step2 you can use it
-./main test.mtx outtest.bin
-
-
-第二个
+这里主要是如何将Lux格式的图还原，具体的如何转Lux的操作，可以查看https://github.com/LuxGraph/Lux/blob/master/tools/converter.cc
+我这里是它的反向操作。
